@@ -19,9 +19,10 @@ def animate_aircraft(ac):
 
     line, = ax.plot([], [], 'o-', lw=2)
     trail, = ax.plot([], [], '-', lw=1, color=[0.090, 0.870, 0.933, 0.4])
-    fpath, = ax.plot([], [], '-', lw=1, color=[0.090, 0.192, 0.933, 0.25])
-    lpath, = ax.plot([], [], '-', lw=2, color=[1,0,0, 0.25])
-    rpath, = ax.plot([], [], '-', lw=2, color=[0,1,0, 0.25])
+    dpath, = ax.plot([], [], '-', lw=1, color=[0, 0, 0, 0.3]) # desired path 
+    fpath, = ax.plot([], [], '-', lw=1.5, color=[0.090, 0.192, 0.933, 0.5]) # path taken 
+    lpath, = ax.plot([], [], '-', lw=2, color=[1,0,0, 0.25]) # hard left 
+    rpath, = ax.plot([], [], '-', lw=2, color=[0,1,0, 0.25]) # hard right 
 
     time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 
@@ -34,10 +35,11 @@ def animate_aircraft(ac):
         line.set_data([], [])
         trail.set_data([], [])
         fpath.set_data([], [])
+        dpath.set_data([], [])
         lpath.set_data([], [])
         rpath.set_data([], [])
         time_text.set_text('')
-        return line, time_text, trail, fpath, lpath, rpath 
+        return line, time_text, trail, fpath, lpath, rpath, dpath 
 
 
     def animate(i):
@@ -50,6 +52,9 @@ def animate_aircraft(ac):
         x1 = 0.001*aircraft.get_xpos()[j]
         y1 = 0.001*aircraft.get_ypos()[j]
 
+
+        fs_state = aircraft.forcast(j,10,10, aircraft.control_des[j])
+        dpath.set_data(0.001*fs_state[:,0], 0.001*fs_state[:,1])
         fs_state = aircraft.forcast(j,10,10)
         fpath.set_data(0.001*fs_state[:,0], 0.001*fs_state[:,1])
         fs_state = aircraft.forcast(j,10,10, umax_left)
@@ -61,7 +66,7 @@ def animate_aircraft(ac):
         trail.set_data(0.001*aircraft.get_xpos()[:j], 0.001*aircraft.get_ypos()[:j])
 
         time_text.set_text('time = %.1f with dt = %.2f s and rmin = %.2f km' %(aircraft.timevec[j], aircraft.dt, aircraft.get_rmin('km') ))
-        return line, time_text, trail, fpath, lpath, rpath   
+        return line, time_text, trail, fpath, lpath, rpath, dpath   
 
     # choose the interval based on dt and the time to animate one step
     from time import time
