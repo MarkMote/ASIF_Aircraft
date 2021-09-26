@@ -47,7 +47,7 @@ class Simulation(Parameters):
         if udes==[]:
             self.control_des[i] = u
         else:
-            self.control_des = udes 
+            self.control_des[i] = udes 
         
         # Integrate 
         self.integrate()

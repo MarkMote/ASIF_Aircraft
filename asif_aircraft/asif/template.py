@@ -27,7 +27,7 @@ from parameters import Parameters
 
 class ASIF(Parameters): 
     def __init__(self):
-        self.zero_input = np.zeros([3,1])
+        self.zero_input = [0]
         
         ######################################################################
         # Set up the ASIF parameters and options here                        # 
@@ -38,18 +38,16 @@ class ASIF(Parameters):
         """
         Parameters
         ----------
-        x : numpy array with 6 elements 
-            x = [x_pos, y_pos, z_pos, x_vel, y_vel, z_vel]
-            where x,y,z are hill frame coordinates 
-                u : 3x1 numpy array
-        u_des = [[Fx], [Fy], [Fz]]
-            desired control input 
+        x0 : state
+            x = [x_pos, y_pos, theta]
+        u_des: desired control input 
+            u_des = [omega_des]
+
 
         Returns
         -------
-        u : 3x1 numpy array
-            u = [[Fx], [Fy], [Fz]]
-            returned control input  
+        u : actual control input 
+            u = [omega_act] 
         """
         
         ######################################################################

@@ -26,26 +26,26 @@ from parameters import Parameters
 
 class Controller(Parameters): 
     def __init__(self):
-        self.zero_input = np.zeros([3,1])
+        self.zero_input = [0]
         
         ######################################################################
         # Set up the controller parameters and options here
         ######################################################################
         
         
-    def main(self, x0, t):
+    def main(self, x0, t=0):
         """
         Parameters
         ----------
-        x : numpy array with 6 elements 
-            x = [q0 q1 q2 q3 omgx omgy omgz omgRW0 omgRW1 omgRW2 omgRW3]
-            where x,y,z are hill frame coordinates 
+        x0 : state
+            x = [x_pos, y_pos, theta]
+        t: time since start 
+
 
         Returns
         -------
-        u : 3x1 numpy array
-            u = [ThrustTorque1 
-            elements represent forces along x, y, and z axes respectively 
+        u : actual control input 
+            u = [omega_act] 
         """
         
         ######################################################################

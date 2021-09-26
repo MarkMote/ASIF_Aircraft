@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 from matplotlib import animation 
 import numpy as np 
 
-def animate_aircraft(ac): 
-    playx = 50 # factor to speed up animation from real time 
+def animate_aircraft(ac, plx=50): 
+    playx = plx # factor to speed up animation from real time 
 
     global aircraft
     global j 
     aircraft = ac 
 
     # set up figure and animation
-    fig = plt.figure(figsize=(9,9))
-    lims = 4
+    fig = plt.figure(figsize=(8,8))
+    lims = 5
     ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
                         xlim=(-lims,lims), ylim=(-lims, lims))
     ax.grid(alpha=0.25)
