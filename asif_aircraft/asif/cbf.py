@@ -55,7 +55,7 @@ class ASIF(Parameters):
         theta = x0[2]
         omg_des = u_des[0]
 
-        if np.cos(theta) >= 0: # facing boundary 
+        if np.cos(theta) >= -.1: # facing boundary 
             if np.sin(theta) <= 0: # boundary on left 
                 omg_min = -self.omega_max
                 omg_max = (self.speed*np.cos(theta))-self.alpha(self.h_s(x0))

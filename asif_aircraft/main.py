@@ -21,7 +21,7 @@ from asif.cbf import ASIF
 # Parameters 
 T  = 60*1 # total simulation time [s]
 Nsteps = math.ceil(5*T) # number steps in simulation time horizon
-x0 = [-2000,0, -0.1] # initial state 
+x0 = [-2000,0, 0.01] # initial state 
 
 
 # Initialize Aircraft Simulation, Controller, and ASIF
@@ -42,9 +42,55 @@ for i in range(Nsteps-1):
 #############################################################################
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
+
+fig = plt.figure()
+ax = plt.axes()
+plt.plot(aircraft.get_xpos(), aircraft.get_theta())
+# plt.show()
+
+from visualization.animations import *
+animate_aircraft(aircraft, 20)
+
+exit()
+
+
+def f(x, y):
+    return np.sin(np.sqrt(x ** 2 + y ** 2))
+
+x = np.linspace(-1500, -100, 50)
+y = np.linspace(-2, 2, 50)
+Z1 = np.zeros([len(x),len(y)])
+Z2 = np.zeros([len(x),len(y)])
+X, Y = np.meshgrid(x, y)
+for i in range(len(x)): 
+    for j in range(len(y)): 
+        asif.main([X[i,j], 0, Y[i,j]], [0])
+        Z1[i,j] = asif.OMGmin[-1]
+        Z2[i,j] = asif.OMGmax[-1]
+
+        # print(asif.OMGmin[-1])
+
+fig = plt.figure()
+
+# ax=plt.axes()
+# ax.contour(X,Y,Z)
+# plt.show()
+# exit() 
+
+ax = plt.axes(projection='3d')
+surf = ax.plot_surface(X, Y, Z1)
+ax.plot_surface(X, Y, Z2)
+ax.set_zlim([-.19,.19])
+# ax.contour3D(X, Y, Z, 50)
+ax.set_xlabel('x')
+ax.set_ylabel('theta')
+ax.set_zlabel('omgmin')
+plt.show()
+
+
 # plt.plot(aircraft.timevec, aircraft.get_xpos())
 # plt.show()
-# exit()
+exit()
 
 # plt.plot(aircraft.timevec[:-1], asif.OMGmin,
 #  aircraft.timevec[:-1], asif.OMG,
