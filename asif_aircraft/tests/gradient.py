@@ -18,13 +18,16 @@ global Rmin, Ds
 Rmin = v/omg 
 x1 = np.array([ 500, 1000, .4])
 x2 = np.array([-5500, -300, np.pi/4])
+X = np.concatenate((x1,x2))
 # global Ds 
-Ds = 0 
+Ds = 0
 Nsteps = 1000
 T = 90
 timevec = np.linspace(0,T,Nsteps)
 
-def h(x1,x2):
+def h(X):
+    x1 = X[:3]
+    x2 = X[-3:]
     global Rmin, Ds 
     theta1 = x1[2]
     theta2 = x2[2]
@@ -36,9 +39,11 @@ def h(x1,x2):
 
     return A1-A2-Ds**2
 
-h(x1,x2)
+# h(x1,x2)
 
-def grad_h(x1,x2):
+def grad_h(X):
+    x1 = X[:3]
+    x2 = X[-3:]
     global Rmin, Ds 
     db = x1[0]-Rmin*np.sin(x1[2]) - (x2[0]-Rmin*np.sin(x2[2]))
     dc = x1[1]+Rmin*np.cos(x1[2]) - (x2[1]+Rmin*np.cos(x2[2]))
@@ -48,20 +53,22 @@ def grad_h(x1,x2):
 
     return gh 
 
-def grad_h_approx(x1,x2):
+def grad_h_approx(X):
     gh = np.array([0,0,0,0,0,0])
-    delta = 10e-8
-    d1 = np.array([delta, 0, 0]) #TODO: more efficient method 
-    d2 = np.array([0, delta, 0]) 
-    d3 = np.array([0, 0, delta]) 
-    gh[0] = (h(x1+d1,x2)-h(x1-d1,x2))/(2*delta)# (h(x1+d1,x2)-h(x1-d1,x2))/(2*delta)
+    delta = 10e-4
+    Delta = 0.5*delta*np.eye(6) 
+    for i in range(6): 
+        gh[i] = (h(X+Delta[i])-h(X-Delta[i]))/delta 
     return gh 
 
-gh = grad_h(x1,x2)[0]
-gha = grad_h_approx(x1,x2)[0]
-print("grad_h = ", gh)
+print("h(X) = ", h(X))
+
+# gh = grad_h(x1,x2)[0]
+
+gha = grad_h_approx(X)
+# print("grad_h = ", gh)
 print("grad_h_approx = ", gha)
-print("percent error = ", 100*np.abs(gh-gha)/gh)
+# print("percent error = ", 100*np.abs(gh-gha)/gh)
 
 sys.exit() 
 # rho = np.zeros(timevec.__len__())
