@@ -27,8 +27,8 @@ def animate_aircraft(ac, plx=50):
     time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 
     j = 0 
-    umax_left = np.array([aircraft.omega_max,0])
-    umax_right = np.array([-aircraft.omega_max, 0])
+    umax_left = np.array([0,aircraft.omega_max])
+    umax_right = np.array([0,-aircraft.omega_max])
 
     def init():
         """initialize animation"""

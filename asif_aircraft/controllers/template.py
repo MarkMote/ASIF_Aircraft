@@ -26,7 +26,7 @@ from parameters import Parameters
 
 class Controller(Parameters): 
     def __init__(self):
-        self.zero_input = [0]
+        self.zero_input = [0,0]
         
         ######################################################################
         # Set up the controller parameters and options here
@@ -44,8 +44,8 @@ class Controller(Parameters):
 
         Returns
         -------
-        u : actual control input 
-            u = [omega_act] 
+        u : control input 
+            u = [v omega] 
         """
         
         ######################################################################

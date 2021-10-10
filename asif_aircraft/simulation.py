@@ -1,9 +1,17 @@
 # General Imports 
 import numpy as np
-
+import sys, os, inspect
+import pathlib
+sys.path.append(pathlib.Path(__file__).parent.resolve())
 
 # Import Local Directories 
-from parameters import Parameters
+# from parameters import Parameters
+# sys.path.append('..')
+# sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))) # add parent directory to path  
+# sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
+# sys.path.append(os.getcwd())
+print(os.getcwd())
+from parameters import Parameters 
 
 class Simulation(Parameters):
 
@@ -26,12 +34,12 @@ class Simulation(Parameters):
         '''
         Dynamics Function 
         x = [sx, sy, theta]
-        u = [omg]
+        u = [v, omg]
         '''
 
         return [self.speed*np.cos(x[2]), 
                 self.speed*np.sin(x[2]),
-                u[0] ]
+                u[1] ]
 
     def integrate(self):
         i = self.cur_ind 

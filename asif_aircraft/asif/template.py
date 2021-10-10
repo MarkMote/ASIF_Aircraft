@@ -47,7 +47,7 @@ class ASIF(Parameters):
         Returns
         -------
         u : actual control input 
-            u = [omega_act] 
+            u = [v_act, omega_act] 
         """
         
         ######################################################################

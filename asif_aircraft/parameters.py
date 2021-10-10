@@ -3,7 +3,6 @@ Parameters is a data class that will be inherited by the controller, asif, and s
 
 '''
 
-
 class Parameters(): 
     # Defined 
     speed = 100 # [m/s]
