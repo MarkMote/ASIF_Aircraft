@@ -7,9 +7,13 @@ import numpy as np
 import matplotlib as mpl 
 import matplotlib.pyplot as plt 
 from matplotlib import animation 
-from simulation import *
 import math 
-# from visualization.animations import * 
+import sys, os, inspect
+import os
+
+# Relative Imports 
+sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))) # add parent directory to path  
+from simulation import *
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Import the Desired Controller from the "controllers" directory 
@@ -37,6 +41,7 @@ for i in range(Nsteps-1):
     u = asif.main(x, udes)
 
     aircraft.step(u, udes)
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 #############################################################################
