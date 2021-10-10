@@ -1,5 +1,5 @@
 """
-INCOMPLETE
+INCOMPLETE: currently only includes geofence asif
 """
 
 # Imports 
@@ -24,7 +24,7 @@ from asif.geofence import ASIF
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 # Parameters 
-T  = 60*1 # total simulation time [s]
+T  = 60*0.6 # total simulation time [s]
 Nsteps = math.ceil(5*T) # number steps in simulation time horizon
 x01 = np.array([-2000,0, 0.01]) # initial state 
 x02 = np.array([ 2000, 0, -np.pi])
@@ -44,19 +44,14 @@ for i in range(Nsteps-1):
     u = asif.main(x, udes)
 
     aircraft_1.step(u, udes)
+    aircraft_2.step(u, udes)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 #############################################################################
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-
-# fig = plt.figure()
-# ax = plt.axes()
-# plt.plot(aircraft.get_xpos(), aircraft.get_theta())
-# # plt.show()
-
 from visualization.animations import *
-animate_aircraft(aircraft, 20)
+animate_aircraft2(aircraft_1, aircraft_2, 20)
 
 exit()
 
